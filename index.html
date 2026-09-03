@@ -3,46 +3,135 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Todavía no hay nada aquí</title>
+<title>Buzón de sugerencias</title>
 <style>
-  :root { color-scheme: light dark; }
-  body {
-    margin: 0; min-height: 100vh;
-    display: grid; place-items: center;
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    background: #f4f6f8; color: #1a2027;
-    padding: 24px;
+  :root {
+    color-scheme: light dark;
+    --fondo: #f4f6f8;
+    --texto: #1a2027;
+    --tenue: #5b6875;
+    --tarjeta: #ffffff;
+    --borde: #dde3ea;
+    --linea: #b9c3ce;
+    --acento: #2f6bd8;
   }
   @media (prefers-color-scheme: dark) {
-    body { background: #121820; color: #e8eef5; }
-    .caja { background: #1b232e !important; border-color: #2b3644 !important; }
-    code { background: #253040 !important; }
+    :root {
+      --fondo: #121820;
+      --texto: #e8eef5;
+      --tenue: #9dabbb;
+      --tarjeta: #1b232e;
+      --borde: #2b3644;
+      --linea: #3d4a5c;
+      --acento: #7aa5f0;
+    }
   }
-  .caja {
-    background: #fff; border: 1px solid #dde3ea; border-radius: 14px;
-    padding: 34px; max-width: 480px; text-align: center;
-    box-shadow: 0 10px 30px -18px rgba(0,0,0,.3);
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.55;
+    padding: 24px 18px 48px;
   }
-  h1 { font-size: 22px; margin: 0 0 10px; }
-  p { margin: 0 0 14px; line-height: 1.55; }
-  p:last-child { margin-bottom: 0; }
-  code {
-    background: #eef2f6; padding: 2px 6px; border-radius: 4px;
-    font-family: ui-monospace, "Consolas", monospace; font-size: .9em;
+
+  .hoja {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
   }
-  .chica { font-size: 14px; opacity: .75; }
+
+  header {
+    padding: 12px 0 4px;
+  }
+
+  h1 {
+    font-size: clamp(26px, 7vw, 38px);
+    line-height: 1.2;
+    margin: 0 0 10px;
+    letter-spacing: -0.02em;
+  }
+
+  .explicacion {
+    margin: 0;
+    font-size: clamp(16px, 4.2vw, 18px);
+    color: var(--tenue);
+    max-width: 46ch;
+  }
+
+  /* Espacio reservado para el formulario. Todavia no hay formulario:
+     este bloque solo aparta el lugar donde va a ir en el siguiente paso. */
+  .lugar-formulario {
+    margin-top: 32px;
+    background: var(--tarjeta);
+    border: 2px dashed var(--linea);
+    border-radius: 14px;
+    padding: clamp(24px, 6vw, 40px) clamp(18px, 5vw, 32px);
+    text-align: center;
+  }
+
+  .etiqueta {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--acento);
+    margin-bottom: 12px;
+  }
+
+  .lugar-formulario h2 {
+    font-size: clamp(18px, 4.8vw, 21px);
+    margin: 0 0 10px;
+  }
+
+  .lugar-formulario p {
+    margin: 0;
+    color: var(--tenue);
+    font-size: 15px;
+    max-width: 40ch;
+    margin-inline: auto;
+  }
+
+  footer {
+    margin-top: 28px;
+    font-size: 13px;
+    color: var(--tenue);
+    border-top: 1px solid var(--borde);
+    padding-top: 16px;
+  }
 </style>
 </head>
 <body>
-  <div class="caja">
-    <h1>Todavía no hay nada aquí</h1>
-    <p>Y eso es exactamente lo que tiene que decir hoy.</p>
-    <p>Si estás leyendo esto en tu propia liga, quiere decir que
-       <strong>tu repositorio, tu publicación y tu página ya funcionan</strong>.
-       Es todo lo que necesitabas antes de la sesión.</p>
-    <p class="chica">El martes le vas a pedir a Claude que reemplace esta página
-       por la tuya. Este archivo se llama <code>index.html</code> y es el único
-       que hay que cambiar.</p>
+  <div class="hoja">
+
+    <header>
+      <h1>Buzón de sugerencias</h1>
+      <p class="explicacion">
+        Un espacio para que cualquiera del área deje una idea, un pendiente o
+        algo que se puede mejorar, sin tener que buscar a nadie para decirlo.
+      </p>
+    </header>
+
+    <main>
+      <section class="lugar-formulario" aria-label="Espacio reservado para el formulario">
+        <span class="etiqueta">Próximo paso</span>
+        <h2>Aquí va a ir el formulario</h2>
+        <p>
+          Todavía no está puesto. Este lugar está apartado para los dos campos
+          —nombre y sugerencia— y el botón para enviarlos.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      Todavía no se puede mandar ni ver ninguna sugerencia: la página aún no
+      está conectada con la base de datos.
+    </footer>
+
   </div>
 </body>
 </html>
