@@ -37,6 +37,10 @@ sale de esa tabla o de lo que la persona escriba en el formulario.
 - No inventes datos. Si algo no está en la tabla, que la página diga que no hay
   nada todavía, no un ejemplo.
 - No borres el historial ni fuerces cambios sobre lo ya publicado.
+- **Nunca toques `ParTee`, ni en Supabase ni en GitHub.** Es un proyecto aparte y no
+  se mezcla con este: no lo leas, no le corras SQL, no lo pauses, no le muevas nada.
+  Todo lo de base de datos de esta página va únicamente al proyecto `curso-claude`.
+  Si algo que te pida te acerca a ParTee, párate y pregúntame antes de seguir.
 
 ## 5. Mi regla de verificación
 
