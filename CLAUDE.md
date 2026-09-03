@@ -13,11 +13,32 @@ cuándo se usa.)*
 
 ## 2. De dónde sale cada cifra
 
-Los datos de esta página viven en una tabla de Supabase llamada `registros`.
-Ninguna cifra ni ningún texto que se muestre se escribe a mano en el HTML: todo
-sale de esa tabla o de lo que la persona escriba en el formulario.
+Los datos de esta página viven en dos tablas del proyecto `curso-claude` en
+Supabase. Ninguna cifra ni ningún texto que se muestre se escribe a mano en el
+HTML: todo sale de esas tablas o de lo que la persona escriba en el formulario.
 
-*(En la sesión le agregas las columnas que acabes usando.)*
+**`propuestas`** — una fila por propuesta enviada desde el formulario.
+
+| Columna | Qué guarda |
+|---|---|
+| `id` | uuid que la identifica; se genera solo |
+| `creado_en` | fecha y hora del envío; se pone sola. La lista ordena por aquí, de la más nueva a la más vieja |
+| `nombre` | el nombre de la propuesta |
+| `persona` | quién la propone |
+| `justificacion` | por qué, en texto libre |
+
+**`votos`** — una fila por voto. El número que aparece en cada tarjeta es el
+conteo de filas de esta tabla, no una columna guardada.
+
+| Columna | Qué guarda |
+|---|---|
+| `id` | uuid del voto; se genera solo |
+| `creado_en` | fecha y hora del voto; se pone sola |
+| `propuesta_id` | a qué propuesta apunta (`propuestas.id`) |
+| `votante` | número al azar guardado en el navegador de quien vota. Sirve para no votar dos veces la misma propuesta; no es una cuenta ni identifica a la persona |
+
+La tabla `registros` sigue existiendo en Supabase de la primera versión de la
+página, pero ya nadie la usa: la página no la lee ni le escribe.
 
 ## 3. Cómo quiero que trabajes aquí
 
