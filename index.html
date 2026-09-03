@@ -14,6 +14,8 @@
     --borde: #dde3ea;
     --linea: #b9c3ce;
     --acento: #2f6bd8;
+    --acento-suave: #e8f0fd;
+    --error: #b3261e;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -24,6 +26,8 @@
       --borde: #2b3644;
       --linea: #3d4a5c;
       --acento: #7aa5f0;
+      --acento-suave: #21304a;
+      --error: #f2857c;
     }
   }
 
@@ -35,18 +39,10 @@
     color: var(--texto);
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
     line-height: 1.55;
-    padding: 24px 18px 48px;
+    padding: 24px 18px 56px;
   }
 
-  .hoja {
-    width: 100%;
-    max-width: 640px;
-    margin: 0 auto;
-  }
-
-  header {
-    padding: 12px 0 4px;
-  }
+  .hoja { width: 100%; max-width: 640px; margin: 0 auto; }
 
   h1 {
     font-size: clamp(26px, 7vw, 38px);
@@ -62,42 +58,174 @@
     max-width: 46ch;
   }
 
-  /* Espacio reservado para el formulario. Todavia no hay formulario:
-     este bloque solo aparta el lugar donde va a ir en el siguiente paso. */
-  .lugar-formulario {
-    margin-top: 32px;
-    background: var(--tarjeta);
-    border: 2px dashed var(--linea);
-    border-radius: 14px;
-    padding: clamp(24px, 6vw, 40px) clamp(18px, 5vw, 32px);
-    text-align: center;
+  /* ---- Pestañas ---- */
+  .pestanas {
+    display: flex;
+    gap: 6px;
+    margin: 28px 0 20px;
+    border-bottom: 1px solid var(--borde);
   }
 
-  .etiqueta {
-    display: inline-block;
-    font-size: 12px;
+  .pestanas button {
+    flex: 1;
+    appearance: none;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    padding: 12px 8px;
+    font: inherit;
     font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-size: 15px;
+    color: var(--tenue);
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    min-height: 46px;
+  }
+
+  .pestanas button[aria-selected="true"] {
     color: var(--acento);
-    margin-bottom: 12px;
+    border-bottom-color: var(--acento);
   }
 
-  .lugar-formulario h2 {
-    font-size: clamp(18px, 4.8vw, 21px);
+  .pestanas button:focus-visible {
+    outline: 2px solid var(--acento);
+    outline-offset: -2px;
+  }
+
+  /* ---- Lista de propuestas ---- */
+  .propuesta {
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+
+  .propuesta h2 {
+    font-size: clamp(17px, 4.6vw, 20px);
+    margin: 0 0 4px;
+    line-height: 1.3;
+  }
+
+  .quien {
     margin: 0 0 10px;
+    font-size: 13px;
+    color: var(--tenue);
   }
 
-  .lugar-formulario p {
-    margin: 0;
+  .justificacion {
+    margin: 0 0 16px;
+    font-size: 15px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .votar {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--acento-suave);
+    color: var(--acento);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 9px 16px;
+    font: inherit;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    min-height: 42px;
+  }
+
+  .votar:hover:not(:disabled) { border-color: var(--acento); }
+
+  .votar:disabled {
+    background: none;
+    border-color: var(--borde);
+    color: var(--tenue);
+    cursor: default;
+  }
+
+  .conteo {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- Formulario ---- */
+  .campo { margin-bottom: 18px; }
+
+  label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .ayuda {
+    display: block;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--tenue);
+    margin-top: 2px;
+  }
+
+  input, textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 16px; /* 16px evita que el celular haga zoom al enfocar */
+    color: var(--texto);
+    background: var(--tarjeta);
+    border: 1px solid var(--linea);
+    border-radius: 10px;
+    padding: 12px;
+  }
+
+  input:focus, textarea:focus {
+    outline: 2px solid var(--acento);
+    outline-offset: -1px;
+    border-color: var(--acento);
+  }
+
+  textarea { min-height: 110px; resize: vertical; }
+
+  .enviar {
+    appearance: none;
+    width: 100%;
+    background: var(--acento);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    min-height: 50px;
+  }
+
+  .enviar:disabled { opacity: .6; cursor: default; }
+
+  @media (prefers-color-scheme: dark) {
+    .enviar { color: #0f1620; }
+  }
+
+  /* ---- Avisos ---- */
+  .aviso {
+    margin: 0 0 16px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
     color: var(--tenue);
     font-size: 15px;
-    max-width: 40ch;
-    margin-inline: auto;
   }
 
+  .aviso.malo { color: var(--error); border-color: currentColor; }
+
+  .aviso.bueno { color: var(--acento); border-color: currentColor; }
+
   footer {
-    margin-top: 28px;
+    margin-top: 32px;
     font-size: 13px;
     color: var(--tenue);
     border-top: 1px solid var(--borde);
@@ -116,22 +244,284 @@
       </p>
     </header>
 
+    <div class="pestanas" role="tablist">
+      <button role="tab" id="tab-lista" aria-controls="panel-lista" aria-selected="true">
+        Propuestas
+      </button>
+      <button role="tab" id="tab-proponer" aria-controls="panel-proponer" aria-selected="false">
+        Proponer
+      </button>
+    </div>
+
     <main>
-      <section class="lugar-formulario" aria-label="Espacio reservado para el formulario">
-        <span class="etiqueta">Próximo paso</span>
-        <h2>Aquí va a ir el formulario</h2>
-        <p>
-          Todavía no está puesto. Este lugar está apartado para los dos campos
-          —nombre y sugerencia— y el botón para enviarlos.
-        </p>
+      <section id="panel-lista" role="tabpanel" aria-labelledby="tab-lista">
+        <p class="aviso" id="estado-lista">Cargando propuestas…</p>
+        <div id="propuestas"></div>
+      </section>
+
+      <section id="panel-proponer" role="tabpanel" aria-labelledby="tab-proponer" hidden>
+        <p class="aviso" id="estado-envio" hidden></p>
+
+        <form id="formulario" novalidate>
+          <div class="campo">
+            <label for="nombre">
+              Nombre de la propuesta
+              <span class="ayuda">En pocas palabras, de qué se trata.</span>
+            </label>
+            <input id="nombre" name="nombre" type="text" maxlength="120" required>
+          </div>
+
+          <div class="campo">
+            <label for="persona">
+              Quién la propone
+              <span class="ayuda">Tu nombre, para saber a quién buscar si hay dudas.</span>
+            </label>
+            <input id="persona" name="persona" type="text" maxlength="80" required>
+          </div>
+
+          <div class="campo">
+            <label for="justificacion">
+              Por qué
+              <span class="ayuda">Una justificación breve: qué mejora o qué problema resuelve.</span>
+            </label>
+            <textarea id="justificacion" name="justificacion" maxlength="600" required></textarea>
+          </div>
+
+          <button class="enviar" type="submit">Enviar propuesta</button>
+        </form>
       </section>
     </main>
 
     <footer>
-      Todavía no se puede mandar ni ver ninguna sugerencia: la página aún no
-      está conectada con la base de datos.
+      Las propuestas y los votos se guardan en la base de datos del área. Una vez
+      enviados no se pueden borrar ni cambiar, así que revisa antes de mandar.
     </footer>
 
   </div>
+
+<script>
+(function () {
+  "use strict";
+
+  // Datos de conexion. La clave que empieza con sb_publishable_ es la publica:
+  // esta hecha para andar a la vista y solo puede hacer lo que las reglas de la
+  // base de datos permiten (leer y agregar). La secreta nunca va aqui.
+  var SUPABASE_URL = "https://xrutrzrzmppcmzhgdebi.supabase.co";
+  var CLAVE = "sb_publishable_dZj_Elrb3qP2_Ib7njigoQ_v-3WOOoN";
+
+  var API = SUPABASE_URL + "/rest/v1/";
+
+  function encabezados(extra) {
+    var h = {
+      apikey: CLAVE,
+      Authorization: "Bearer " + CLAVE
+    };
+    for (var k in extra) { if (Object.prototype.hasOwnProperty.call(extra, k)) h[k] = extra[k]; }
+    return h;
+  }
+
+  // Identificador del navegador, para que cada quien vote una vez por propuesta.
+  // No es una cuenta ni identifica a la persona: es un numero al azar guardado
+  // en este navegador.
+  function idVotante() {
+    var id = null;
+    try { id = localStorage.getItem("buzon_votante"); } catch (e) { id = null; }
+    if (!id) {
+      id = (window.crypto && window.crypto.randomUUID)
+        ? window.crypto.randomUUID()
+        : String(Date.now()) + "-" + Math.random().toString(36).slice(2);
+      try { localStorage.setItem("buzon_votante", id); } catch (e) { /* modo privado */ }
+    }
+    return id;
+  }
+
+  var VOTANTE = idVotante();
+
+  var estadoLista = document.getElementById("estado-lista");
+  var contenedor = document.getElementById("propuestas");
+  var estadoEnvio = document.getElementById("estado-envio");
+  var formulario = document.getElementById("formulario");
+
+  // ---- Pestañas ----
+  var pestanas = [
+    { boton: document.getElementById("tab-lista"), panel: document.getElementById("panel-lista") },
+    { boton: document.getElementById("tab-proponer"), panel: document.getElementById("panel-proponer") }
+  ];
+
+  pestanas.forEach(function (actual) {
+    actual.boton.addEventListener("click", function () {
+      pestanas.forEach(function (p) {
+        var activa = (p === actual);
+        p.boton.setAttribute("aria-selected", activa ? "true" : "false");
+        p.panel.hidden = !activa;
+      });
+    });
+  });
+
+  function mostrarPestana(indice) {
+    pestanas[indice].boton.click();
+  }
+
+  function aviso(elemento, texto, tipo) {
+    elemento.textContent = texto;
+    elemento.className = "aviso" + (tipo ? " " + tipo : "");
+    elemento.hidden = false;
+  }
+
+  // ---- Cargar y pintar la lista ----
+  function cargar() {
+    aviso(estadoLista, "Cargando propuestas…");
+    contenedor.textContent = "";
+
+    Promise.all([
+      fetch(API + "propuestas?select=id,nombre,persona,justificacion&order=creado_en.desc", {
+        headers: encabezados()
+      }),
+      fetch(API + "votos?select=propuesta_id,votante", { headers: encabezados() })
+    ]).then(function (respuestas) {
+      if (!respuestas[0].ok || !respuestas[1].ok) throw new Error("respuesta no valida");
+      return Promise.all([respuestas[0].json(), respuestas[1].json()]);
+    }).then(function (datos) {
+      pintar(datos[0], datos[1]);
+    }).catch(function () {
+      aviso(estadoLista,
+        "No se pudieron cargar las propuestas. Revisa tu conexión y vuelve a intentar.",
+        "malo");
+    });
+  }
+
+  function pintar(propuestas, votos) {
+    contenedor.textContent = "";
+
+    if (!propuestas.length) {
+      aviso(estadoLista, "Todavía no hay ninguna propuesta. Sé la primera persona en dejar una.");
+      return;
+    }
+
+    estadoLista.hidden = true;
+
+    var conteos = {};
+    var mios = {};
+    votos.forEach(function (v) {
+      conteos[v.propuesta_id] = (conteos[v.propuesta_id] || 0) + 1;
+      if (v.votante === VOTANTE) mios[v.propuesta_id] = true;
+    });
+
+    propuestas.forEach(function (p) {
+      contenedor.appendChild(
+        tarjeta(p, conteos[p.id] || 0, !!mios[p.id])
+      );
+    });
+  }
+
+  // Todo el texto que escribio la gente se pone con textContent, nunca como
+  // HTML, para que nadie pueda meter codigo en la pagina desde el formulario.
+  function tarjeta(propuesta, votos, yaVote) {
+    var caja = document.createElement("article");
+    caja.className = "propuesta";
+
+    var titulo = document.createElement("h2");
+    titulo.textContent = propuesta.nombre;
+    caja.appendChild(titulo);
+
+    var quien = document.createElement("p");
+    quien.className = "quien";
+    quien.textContent = "Propuesta de " + propuesta.persona;
+    caja.appendChild(quien);
+
+    var porque = document.createElement("p");
+    porque.className = "justificacion";
+    porque.textContent = propuesta.justificacion;
+    caja.appendChild(porque);
+
+    var boton = document.createElement("button");
+    boton.className = "votar";
+    boton.type = "button";
+    pintarBoton(boton, votos, yaVote);
+
+    boton.addEventListener("click", function () {
+      if (boton.disabled) return;
+      boton.disabled = true;
+
+      fetch(API + "votos", {
+        method: "POST",
+        headers: encabezados({ "Content-Type": "application/json" }),
+        body: JSON.stringify({ propuesta_id: propuesta.id, votante: VOTANTE })
+      }).then(function (r) {
+        if (r.ok) {
+          pintarBoton(boton, votos + 1, true);
+        } else if (r.status === 409) {
+          // La base de datos ya tenia un voto de este navegador.
+          pintarBoton(boton, votos, true);
+        } else {
+          throw new Error("no se guardo");
+        }
+      }).catch(function () {
+        pintarBoton(boton, votos, false);
+        boton.disabled = false;
+        aviso(estadoLista, "No se pudo registrar tu voto. Vuelve a intentar.", "malo");
+        estadoLista.hidden = false;
+      });
+    });
+
+    caja.appendChild(boton);
+    return caja;
+  }
+
+  function pintarBoton(boton, votos, yaVote) {
+    boton.textContent = "";
+
+    var etiqueta = document.createElement("span");
+    etiqueta.textContent = yaVote ? "Ya votaste" : "Votar";
+    boton.appendChild(etiqueta);
+
+    var numero = document.createElement("span");
+    numero.className = "conteo";
+    numero.textContent = votos === 1 ? "1 voto" : votos + " votos";
+    boton.appendChild(numero);
+
+    boton.disabled = yaVote;
+    boton.setAttribute("aria-label",
+      (yaVote ? "Ya votaste por esta propuesta. " : "Votar por esta propuesta. ") +
+      numero.textContent);
+  }
+
+  // ---- Enviar una propuesta ----
+  formulario.addEventListener("submit", function (evento) {
+    evento.preventDefault();
+
+    var nombre = document.getElementById("nombre").value.trim();
+    var persona = document.getElementById("persona").value.trim();
+    var justificacion = document.getElementById("justificacion").value.trim();
+
+    if (!nombre || !persona || !justificacion) {
+      aviso(estadoEnvio, "Faltan datos: los tres campos son necesarios.", "malo");
+      return;
+    }
+
+    var boton = formulario.querySelector(".enviar");
+    boton.disabled = true;
+    aviso(estadoEnvio, "Enviando…");
+
+    fetch(API + "propuestas", {
+      method: "POST",
+      headers: encabezados({ "Content-Type": "application/json" }),
+      body: JSON.stringify({ nombre: nombre, persona: persona, justificacion: justificacion })
+    }).then(function (r) {
+      if (!r.ok) throw new Error("no se guardo");
+      formulario.reset();
+      estadoEnvio.hidden = true;
+      boton.disabled = false;
+      cargar();
+      mostrarPestana(0);
+    }).catch(function () {
+      aviso(estadoEnvio, "No se pudo enviar tu propuesta. Vuelve a intentar.", "malo");
+      boton.disabled = false;
+    });
+  });
+
+  cargar();
+})();
+</script>
 </body>
 </html>
